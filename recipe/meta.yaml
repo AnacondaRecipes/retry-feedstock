@@ -10,9 +10,9 @@ source:
   sha256: f8bfa8b99b69c4506d6f5bd3b0aabf77f98cdb17f3c9fc3f5ca820033336fba4
 
 build:
-  noarch: python
+  skip: true # [py<310]
   number: 0
-  script: "{{ PYTHON }} -m pip install . -vv"
+  script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
 
 requirements:
   host:
@@ -29,14 +29,22 @@ test:
     - retry
     - retry.api
     - retry.compat
+  requires:
+    - pip
+  commands:
+    - pip check
 
 about:
   home: https://github.com/invl/retry
   license: Apache-2.0
   license_family: Apache
   license_file: LICENSE
-  summary: 'Easy to use retry decorator.'
+  summary: Easy to use retry decorator.
+  description: |
+    Easy to use retry decorator with minimal external dependencies, preservation 
+    of function signatures, and an easy to debug original traceback.
   dev_url: https://github.com/invl/retry
+  doc_url: https://github.com/invl/retry
 
 extra:
   recipe-maintainers:
